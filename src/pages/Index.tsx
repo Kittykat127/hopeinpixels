@@ -1,14 +1,25 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState, useEffect } from "react";
+import Onboarding from "@/components/Onboarding";
+import Dashboard from "@/pages/Dashboard";
 
 const Index = () => {
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
-  );
+  const [showOnboarding, setShowOnboarding] = useState(true);
+
+  useEffect(() => {
+    const seen = localStorage.getItem("hp-onboarding-done");
+    if (seen) setShowOnboarding(false);
+  }, []);
+
+  const handleOnboardingComplete = () => {
+    localStorage.setItem("hp-onboarding-done", "true");
+    setShowOnboarding(false);
+  };
+
+  if (showOnboarding) {
+    return <Onboarding onComplete={handleOnboardingComplete} />;
+  }
+
+  return <Dashboard />;
 };
 
 export default Index;
