@@ -23,7 +23,8 @@ For severity, use the ABCDE rule where applicable (Asymmetry, Border, Color, Dia
 
 Provide 2-3 differential diagnoses with confidence percentages that sum to roughly 100% across all suggestions.
 Provide practical, safe next steps (always including "see a dermatologist").
-Provide commonly associated medications for educational reference only (never as a prescription).`;
+Provide commonly associated medications for educational reference only (never as a prescription).
+Always include a suitable moisturiser (e.g. CeraVe Moisturising Cream, Cetaphil, Vanicream, or an appropriate option for the detected condition) in the medications list as a supportive care recommendation.`;
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
