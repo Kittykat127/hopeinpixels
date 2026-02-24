@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Camera, BookOpen, Clock, Settings, Lightbulb, Heart } from "lucide-react";
+import { Camera, BookOpen, Clock, Settings, Lightbulb, Heart, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 
@@ -144,6 +144,22 @@ const Dashboard = () => {
                 Learn more →
               </button>
             </div>
+          </div>
+        </motion.div>
+
+        {/* Medical Disclaimer */}
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.6 }}
+          className="bg-destructive/5 rounded-xl p-4 border border-destructive/10"
+        >
+          <div className="flex items-start gap-2">
+            <AlertTriangle className="w-4 h-4 text-destructive flex-shrink-0 mt-0.5" />
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              <strong>Not a medical device.</strong> Hope in Pixels provides educational AI screening only and 
+              cannot diagnose conditions. Always consult a qualified healthcare professional.
+            </p>
           </div>
         </motion.div>
 

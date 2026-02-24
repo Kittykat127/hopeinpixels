@@ -1,4 +1,4 @@
-import { ArrowLeft, ChevronRight, Shield, Heart } from "lucide-react";
+import { ArrowLeft, ChevronRight, Shield, Heart, AlertTriangle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const SettingsPage = () => {
@@ -8,32 +8,32 @@ const SettingsPage = () => {
     {
       title: "Account",
       items: [
-        { label: "Change Password", action: true },
-        { label: "Change Email", action: true },
+        { label: "Change Password" },
+        { label: "Change Email" },
       ],
     },
     {
       title: "Privacy & Data",
       items: [
-        { label: "Privacy Policy", action: true },
-        { label: "Terms of Service", action: true },
-        { label: "Export My Data", action: true },
+        { label: "Privacy Policy", path: "/privacy" },
+        { label: "Terms of Service", path: "/terms" },
+        { label: "Export My Data" },
       ],
     },
     {
       title: "About",
       items: [
-        { label: "About Hope in Pixels", action: true },
-        { label: "Our Fair AI Mission", action: true },
-        { label: "Citations & Research", action: true },
+        { label: "About Hope in Pixels" },
+        { label: "Our Fair AI Mission" },
+        { label: "Citations & Research" },
       ],
     },
     {
       title: "Support",
       items: [
-        { label: "FAQs", action: true },
-        { label: "Contact Us", action: true },
-        { label: "Report a Problem", action: true },
+        { label: "FAQs" },
+        { label: "Contact Us" },
+        { label: "Report a Problem" },
       ],
     },
   ];
@@ -47,7 +47,6 @@ const SettingsPage = () => {
           </button>
           <h1 className="text-xl font-bold text-primary-foreground">Settings</h1>
         </div>
-        {/* Profile */}
         <div className="flex items-center gap-4">
           <div className="w-16 h-16 rounded-full gradient-gold flex items-center justify-center text-accent-foreground text-xl font-bold">
             HP
@@ -60,6 +59,17 @@ const SettingsPage = () => {
       </div>
 
       <div className="px-6 mt-4 space-y-6">
+        {/* Medical disclaimer */}
+        <div className="bg-destructive/5 rounded-xl p-4 border border-destructive/10">
+          <div className="flex items-start gap-2">
+            <AlertTriangle className="w-4 h-4 text-destructive flex-shrink-0 mt-0.5" />
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              <strong>Medical Disclaimer:</strong> This app is not a medical device and cannot diagnose skin conditions. 
+              Results are for educational purposes only. Always consult a healthcare professional.
+            </p>
+          </div>
+        </div>
+
         {sections.map((section) => (
           <div key={section.title}>
             <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-2 px-1">
@@ -69,6 +79,9 @@ const SettingsPage = () => {
               {section.items.map((item, i) => (
                 <button
                   key={item.label}
+                  onClick={() => {
+                    if ("path" in item && item.path) navigate(item.path);
+                  }}
                   className={`w-full flex items-center justify-between px-4 py-3.5 text-sm text-foreground hover:bg-muted/50 transition-colors ${
                     i < section.items.length - 1 ? "border-b border-border" : ""
                   }`}
