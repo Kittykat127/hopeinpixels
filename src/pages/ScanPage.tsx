@@ -88,12 +88,32 @@ const ScanPage = () => {
     reader.readAsDataURL(file);
   };
 
-  const handleAnalyze = () => {
+  const handleAnalyze = async () => {
+    if (!capturedImage) return;
     setStep("analyzing");
-    // Simulate analysis time
-    setTimeout(() => {
-      navigate("/results/demo");
-    }, 3000);
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/analyze-skin`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+          },
+          body: JSON.stringify({ image: capturedImage }),
+        }
+      );
+      if (!response.ok) {
+        const err = await response.json().catch(() => ({ error: "Analysis failed" }));
+        throw new Error(err.error || "Analysis failed");
+      }
+      const result = await response.json();
+      navigate("/results/ai", { state: { result, image: capturedImage } });
+    } catch (err: any) {
+      console.error("Analysis error:", err);
+      alert(err.message || "Analysis failed. Please try again.");
+      setStep("preview");
+    }
   };
 
   const resetScan = () => {
